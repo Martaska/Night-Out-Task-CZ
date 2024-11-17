@@ -23,7 +23,8 @@ list(
   # read & format the data ----
   tar_target( metadata, data_file("data Kája", "DATASET_CLANEK_FINAL.xlsx"), format = "file" ), # prepare meta-data file
   tar_target( paths, list_paths("_data") ), # get paths to outcome data
-  tar_target( data, read_data(metadata, paths) ), # read the data
+  tar_target( included, included() ), # extract IDs of included participants
+  tar_target( data, read_data(metadata, paths, included) ), # read the data
   
   # do stats ----
   tar_target( DVs, list_dvs( c("T1TotalExecutionTime", "T1OverallTaskAccuracy", "T1CorrectSequencingTotal") ) ), # list outcomes

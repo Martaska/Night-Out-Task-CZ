@@ -5,6 +5,17 @@
 data_file <- function(folder, file) here("_data", folder, file)
 
 
+# EXTRACT ID OF INCLUDED PATIENTS ----
+included <- function() {
+  
+  here("_data","included_participants.csv") %>%
+    read.csv(sep = ";") %>%
+    select(ParticipantID) %>%
+    unlist(use.names = F)
+  
+}
+
+
 # LIST PATHS TO DATA ----
 list_paths <- function(folder) {
   
@@ -18,7 +29,7 @@ list_paths <- function(folder) {
 
 
 # READ THE DATA ----
-read_data <- function(metadata, paths) {
+read_data <- function(metadata, paths, included) {
   
   # extract demography data
   metadata <-
@@ -47,7 +58,7 @@ read_data <- function(metadata, paths) {
   # add participant-specific outcomes to metadara
   data <-
     full_join(metadata, data0, by = "ParticipantID") %>% # glue the tables by ID
-    filter( (age >= 50 & age <= 60) | (age >= 70 & age <= 80)  ) %>% # keep only participants in age groups of interest to the pilot
+    filter(ParticipantID %in% included) %>% # keep only participants in age groups of interest to the pilot
     mutate(
       Age_group = factor(
         x = case_when(
