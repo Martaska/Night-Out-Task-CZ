@@ -22,6 +22,7 @@ list_paths <- function(folder) {
   list.files(path = folder, recursive = T) %>% # looking for all files in the 'folder'
     ifelse(grepl(".csv", . ), ., NA) %>% # keep only files whose names end with '.csv'
     ifelse(!grepl("data_joined.csv", . ), ., NA) %>% # if the pre-processed file is here, ignore it
+    ifelse(!grepl("included_participants.csv", . ), ., NA) %>%
     na.omit() %>% # get rid of missing values
     c() # formatting shenanigans
   
@@ -55,7 +56,7 @@ read_data <- function(metadata, paths, included) {
     # glue participants one below the other
     reduce(full_join)
   
-  # add participant-specific outcomes to metadara
+  # add participant-specific outcomes to metadata
   data <-
     full_join(metadata, data0, by = "ParticipantID") %>% # glue the tables by ID
     filter(ParticipantID %in% included) %>% # keep only participants in age groups of interest to the pilot
