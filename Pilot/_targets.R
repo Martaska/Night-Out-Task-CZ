@@ -27,13 +27,14 @@ list(
   tar_target( data, read_data(metadata, paths, included) ), # read the data
   
   # do stats ----
-  tar_target( DVs, list_dvs( c("T1TotalExecutionTime", "T1OverallTaskAccuracy", "T1CorrectSequencingTotal") ) ), # list outcomes
+  tar_target( DVs, list_dvs( c("T1TotalExecutionTime", "T1OverallTaskAccuracy", "T1CorrectSequencingTotal", "MoCA", "FAQ") ) ), # list outcomes
   tar_target( formula, get_formula(DVs, "Age_group") ), # prepare formula for statistical analyses
   tar_target( descriptives, compute_descriptives(data, formula) ), # compute descriptive statistics
   tar_target( statistics, compute_statistics(data, formula) ), # compute inferential statistics
+  tar_target( correlations, compute_correlations(data, DVs) ), #
 
   # do plots ----
-  tar_target( labels, prepare_labels(DVs, "Age_group", c("Age Group", "Total Execution Time", "Overall Task Accuracy Score", "Correct Sequencing Total") ) ), # prepare labels for plots
+  tar_target( labels, prepare_labels(DVs, "Age_group", c("Age Group", "Total Execution Time", "Overall Task Accuracy Score", "Correct Sequencing Total", "MoCA", "FAQ") ) ), # prepare labels for plots
   tar_target( fig_box, plot_data(data, DVs, "Age_group", labels, 123) ), # prepare dot-/box-/violin-plot combo
   tar_target( fig_cor, plot_correlations(data, labels) ) # prepare a correlation plot
   

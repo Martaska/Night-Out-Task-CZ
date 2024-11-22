@@ -21,7 +21,7 @@ compute_descriptives <- function(data, formula) jmv::descriptives(
 )
 
 
-# INFERENCE STATISTICS (MANN-WHITNEY U) ----
+# INFERENTIAL STATISTICS (MANN-WHITNEY U) ----
 compute_statistics <- function(data, formula) jmv::ttestIS(
   
   formula = formula, # list all DVs and one IV
@@ -39,3 +39,15 @@ compute_statistics <- function(data, formula) jmv::ttestIS(
 )
 
 
+# CORRELATION MATRIX ----
+compute_correlations <- function(input, cols) jmv::corrMatrix(
+  
+  data = input %>% select( all_of(cols) ), # Data selected all columns of interest
+  pearson = F,# Pearson correlation not computed/included
+  spearman = T, # Spearman correlation computed
+  sig = T, # Print p values
+  plot = T, # Scatter plots` results (lower triangle)
+  plotDens = T, # Densities (diagonal)
+  plotStats = T # Correlation coeffitients (upper triangle)
+  
+)

@@ -35,9 +35,8 @@ read_data <- function(metadata, paths, included) {
   # extract demography data
   metadata <-
     read.xlsx(metadata, sheet = "List1") %>% # read .xlsx file
-    rename("age" = "Věk", "edu" = "Vzdělání", "sex" = "Pohlaví") %>% # re-label variables
-    select(ParticipantID, age, edu, sex) # keep only columns (i.e., variables) of interest
-  
+    rename("age" = "Věk", "edu" = "Vzdělání", "sex" = "Pohlaví") # re-label variables
+    
   # read each data set separately and then glue them one below the other
   data0 <- lapply(
     
